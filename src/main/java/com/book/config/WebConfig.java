@@ -9,10 +9,17 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/api/**")  // Applying CORS settings to all API routes
-                .allowedOrigins("https://bookmanagement-fe-docker.vercel.app/form")  // React frontend URL
+        registry.addMapping("/api/**")  // Apply CORS settings to all API routes
+                .allowedOrigins("https://bookmanagement-fe-docker.vercel.app")  // React frontend URL
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")  // Allowed HTTP methods
                 .allowedHeaders("*")  // Allow all headers
                 .allowCredentials(true);  // Allow cookies and authentication
+
+        // If your frontend is trying to access non-API routes like `/form`, you can add this
+        registry.addMapping("/**") // Apply CORS to all other routes
+                .allowedOrigins("https://bookmanagement-fe-docker.vercel.app")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*")
+                .allowCredentials(true);
     }
 }
